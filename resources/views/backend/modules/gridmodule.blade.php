@@ -41,8 +41,7 @@
     </section>
 </div><!--end #content-->
 
-@include("backend.modal.form_modules",$data['form_modules_module'])
-@include("backend.modal.form_modules",$data['form_modules_module'])
+{{-- @include("backend.modal.form_modules",$data['form_modules_module']) --}}
 @include("backend.modal.permission_modules",$data['permission_modules_module'])
 
 
