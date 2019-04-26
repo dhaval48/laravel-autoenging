@@ -1,0 +1,48 @@
+<?php 
+
+namespace App\General;
+use Lang;
+
+class ModuleConfig {
+
+	public static function users() {
+        return include 'ModuleConfig/user.php';
+    }
+
+	public static function roles() {
+		return include 'ModuleConfig/role.php';
+    }
+
+    public static function permission_modules() {
+		return include 'ModuleConfig/permissionmodule.php';
+    }
+
+    public static function form_modules() {
+		return include 'ModuleConfig/formmodule.php';
+    }
+
+    public static function grid_modules() {
+		return include 'ModuleConfig/gridmodule.php';
+    }
+
+    public static function api_modules() {
+        return include 'ModuleConfig/apimodule.php';
+    }	
+
+    public static function settings() {
+        return include 'ModuleConfig/setting.php';
+    }
+
+    public static function language_translets() {
+        return include 'ModuleConfig/languagetranslet.php';
+    }
+
+    public static function warehouses() {
+        return include 'ModuleConfig/warehouse.php';
+    }
+
+    public static function demos() {
+        return include 'ModuleConfig/demo.php';
+    }
+	// [Moduleconfig]
+}
