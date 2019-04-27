@@ -170,6 +170,8 @@ return [
 
         Barryvdh\DomPDF\ServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
+
+        autoengine\crudpack\CrudpackServiceProvider::class,
     ],
 
     /*

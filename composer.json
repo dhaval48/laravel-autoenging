@@ -12,6 +12,7 @@
         "barryvdh/laravel-dompdf": "^0.8.3",
         "doctrine/dbal": "^2.9",
         "fideloper/proxy": "^4.0",
+        "jeroen-g/laravel-packager": "^2.1",
         "laravel/framework": "5.7.*",
         "laravel/passport": "^7.2",
         "laravel/tinker": "^1.0",
@@ -38,6 +39,7 @@
     },
     "autoload": {
         "psr-4": {
+            "autoengine\\crudpack\\": "packages/autoengine/crudpack/src",
             "App\\": "app/"
         },
         "classmap": [
@@ -50,6 +52,7 @@
     },
     "autoload-dev": {
         "psr-4": {
+            "autoengine\\crudpack\\": "packages/autoengine/crudpack/src",
             "Tests\\": "tests/"
         }
     },
