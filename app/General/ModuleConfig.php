@@ -37,12 +37,6 @@ class ModuleConfig {
         return include 'ModuleConfig/languagetranslet.php';
     }
 
-    public static function warehouses() {
-        return include 'ModuleConfig/warehouse.php';
-    }
 
-    public static function demos() {
-        return include 'ModuleConfig/demo.php';
-    }
 	// [Moduleconfig]
 }

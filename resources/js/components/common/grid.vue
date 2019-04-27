@@ -60,8 +60,6 @@ export default {
             type : this.module.type,
             gridIndex:0,
 			
-			location_id : [],
-			is_active : this.module.is_active,
 			// [GridOptionsData]
         }
     },
@@ -118,12 +116,6 @@ export default {
         if(this.module.id == 0){
             $.each(this.grid, (i, list) => {
                 this.form[list.name][this.index] = "";
-            });
-        }
-        
-        if(this.module.location_id_search) {
-            axios.get(this.module.location_id_search).then(data => {
-                this.location_id = data.data;
             });
         }
         // [GridDropdownSearch]

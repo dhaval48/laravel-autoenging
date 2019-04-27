@@ -173,20 +173,6 @@ class CommonController extends Controller
 		\App::setLocale($request->locale);
 		user()->update(['locale' => $request->locale]);
 		return back();
-	}	
-
-	public function getWarehouse_id(Request $request) {
-
-		return \DB::table('warehouses')->latest()->wherenull('deleted_at')->pluck('name','id');
-
 	}
-
-	public function getLocation_id(Request $request) {
-
-		return \DB::table('warehouses')->latest()->wherenull('deleted_at')->pluck('name','id');
-
-	}
-
-	
 	// [Function]
 }

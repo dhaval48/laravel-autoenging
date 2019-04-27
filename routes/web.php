@@ -124,26 +124,4 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'general'], function () {
 		Route::post('languagetranslet/destroy', 'LanguagetransletController@destroy')->name('languagetranslet.destroy');
 	});
 });
-
-Route::group(['namespace' => 'Backend', 'prefix' => 'general'], function () {
-	Route::group(['middleware' => ['auth', 'locale:en']], function () {
-		Route::get('warehouses', 'WarehouseController@index')->name('warehouse.index');
-		Route::get('warehouses-paginate','WarehouseController@Paginate')->name('warehouse.paginate');
-		Route::get('warehouse/create', 'WarehouseController@create')->name('warehouse.create');
-		Route::post('warehouse/store', 'WarehouseController@store')->name('warehouse.store');
-		Route::get('warehouse/edit/{id}', 'WarehouseController@edit')->name('warehouse.edit');
-		Route::post('warehouse/destroy', 'WarehouseController@destroy')->name('warehouse.destroy');
-	});
-});
-
-Route::group(['namespace' => 'Backend', 'prefix' => 'general'], function () {
-	Route::group(['middleware' => ['auth', 'locale:en']], function () {
-		Route::get('demos', 'DemoController@index')->name('demo.index');
-		Route::get('demos-paginate','DemoController@Paginate')->name('demo.paginate');
-		Route::get('demo/create', 'DemoController@create')->name('demo.create');
-		Route::post('demo/store', 'DemoController@store')->name('demo.store');
-		Route::get('demo/edit/{id}', 'DemoController@edit')->name('demo.edit');
-		Route::post('demo/destroy', 'DemoController@destroy')->name('demo.destroy');
-	});
-});
 // [RouteArray]

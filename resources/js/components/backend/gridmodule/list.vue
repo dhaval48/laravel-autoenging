@@ -31,10 +31,10 @@
                                 <button class="btn btn-default custom-default dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></button>
                                 <ul class="dropdown-menu drop">
                                     <li>
-                                        <a v-if="lists.permissions['update_'+lists.dir]" :href='module.edit_route+"/"+list.id'><i class="glyphicon glyphicon-edit" style="color: green;" data-toggle="tooltip" data-placement="top" data-original-title="Edit"></i>{{lists.common.edit}}</a>
+                                        <a v-if="lists.permissions['update_'+lists.dir]" :href='module.edit_route+"/"+list.id'><i class="fa fa-edit" style="color: green;" data-toggle="tooltip" data-placement="top" data-original-title="Edit"></i>{{lists.common.edit}}</a>
                                     </li>
                                     <li>
-                                        <a v-if="lists.permissions['delete_'+lists.dir]" href="javascript:void(0);" @click="deleteRecord(list.id)"><i class="glyphicon glyphicon-trash" style="color: red;" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"></i>{{lists.common.delete}}</a>
+                                        <a v-if="lists.permissions['delete_'+lists.dir]" href="javascript:void(0);" @click="deleteRecord(list.id)"><i class="fa fa-trash" style="color: red;" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"></i>{{lists.common.delete}}</a>
                                     </li>
                                 </ul>
                             </div>

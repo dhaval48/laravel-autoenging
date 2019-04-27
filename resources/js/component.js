@@ -15,8 +15,4 @@ Vue.component('api_modules-view',require('./components/backend/apimodule/view.vu
 Vue.component('settings-view',require('./components/backend/setting/view.vue').default);
 
 Vue.component('language_translets-view',require('./components/backend/languagetranslet/view.vue').default);
-
-Vue.component('warehouses-view',require('./components/backend/warehouse/view.vue').default);
-
-Vue.component('demos-view',require('./components/backend/demo/view.vue').default);
 // [VueComponent]
