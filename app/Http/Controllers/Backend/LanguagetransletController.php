@@ -178,7 +178,6 @@ class LanguagetransletController extends Controller {
 		// [GridValidation]
         $input = $request->all();
         $input['status'] = 1;
-        $input['locale'] = $request->locale['value'];
         //[DropdownValue]
         
         \DB::beginTransaction();   
@@ -240,8 +239,6 @@ class LanguagetransletController extends Controller {
         $model = Module::findorfail($id);
         $formelement = $model->getAttributes();
         $formelement['_token'] = csrf_token();
-
-        $formelement['locale'] = ['label' => $model->locale. "-" .LangCode($model->locale), 'value' => $model->locale];
         
         // [DropdownSelectedValue]
 

@@ -55,7 +55,7 @@ Class Grid {
             $project_path_main = env('PROD_PROJECT_PATH');
         }
 
-        $parent_controller_name = $this->makeControllerName($request->parent_form['value']);
+        $parent_controller_name = $this->makeControllerName($request->parent_form);
 
         $parent_table_name = \DB::table('form_modules')->where('main_module', $request->parent_form)->wherenull('deleted_at')->wherenull('parent_form')->first()->table_name;
 

@@ -194,7 +194,6 @@ class ApimoduleController extends Controller {
         }
 		// [GridValidation]
         $input = $request->all();
-		$input['parent_module'] = $input['parent_module']['value'];
 		//[DropdownValue]
         $module = "";
         \DB::beginTransaction();   
@@ -266,8 +265,7 @@ class ApimoduleController extends Controller {
         $model = Module::findorfail($id);
         $formelement = $model->getAttributes();
         $formelement['_token'] = csrf_token();
-        
-		$formelement['parent_module'] = \DB::table('permission_modules')->select('name as label','name as value')->where('name',$model->parent_module)->first();
+  
 		// [DropdownSelectedValue]
 
          if(count($model->api_tables) > 0 ) {
@@ -341,11 +339,11 @@ class ApimoduleController extends Controller {
         $is_model = $request->is_model ? 1 : 0;
         $is_public = $request->is_public ? 1 : 0;
         return  "
-                 'parent_module' => '".$request->parent_module['value']."',
+                 'parent_module' => '".$request->parent_module."',
                  'main_module' => '".$request->main_module."',
                  'table_name' => '".$request->table_name."',
-                 'is_model' => '".$request->is_model."',
-                 'is_public' => '".$request->is_public."',
+                 'is_model' => ".$is_model.",
+                 'is_public' => ".$is_public.",
                 ";
     }
 

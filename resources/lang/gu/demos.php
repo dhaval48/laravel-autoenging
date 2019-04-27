@@ -2,10 +2,10 @@
 
 return [
 		'name' => 'નામ',
-		'status' => 'Status',
-		'date' => 'તારીખ',
+		'date' => 'Date',
 		'warehouse_id' => 'વેરહાઉસ',
-		'description' => 'વર્ણન',
+		'gender' => 'Gender',
+		'description' => 'Description',
 		
         'create_title' => 'Create Demo',
         'edit_title' => 'ડેમો સંપાદિત કરો',

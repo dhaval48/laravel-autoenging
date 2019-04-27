@@ -293,7 +293,6 @@ export default {
         },
         // [DropdownFunction]
         onSubmit() {            
-            var name = this.form.main_module;
             this.form.post(this.module.store_route).then(response => {
                  
                 if(this.module.id == 0) {
@@ -340,6 +339,10 @@ export default {
 
                 // [GRID_RESET]
 
+                $(document).ready( () => { 
+                    $(".select2").select2({width:'100%'});
+                });
+
                 this.$root.$emit('grid_modulesCreated', response);
                 this.$parent.activity_init();
 
@@ -363,6 +366,42 @@ export default {
                 this.form[input_db_name] = event.target.value
             });
 
+            $(document).on('change', '.select2-auto-grid', event => {
+                var input_db_name = $(event.target).attr('name');
+                var position = $(event.target).attr('position');
+
+                this.form[input_db_name][position] = event.target.value;
+
+                if(this.form.input_type[position] == "dropdown") {
+                    $('.db-table[position="'+position+'"]').prop("disabled", false);
+                    $('.db-value[position="'+position+'"]').prop("disabled", false);
+                    $('.db-key[position="'+position+'"]').prop("disabled", false);
+
+                    if(this.form.table[position] != null && this.form.table[position]) {
+                        this.value = [];
+                        this.key = [];
+                        axios.get(this.module.table_data_search+'?q='+this.form.table[position]).then(data => {
+                            this.value = data.data;
+                            this.key = data.data;
+                        });
+                    }
+                } else {
+                    $('.db-table[position="'+position+'"]').prop("disabled", true);
+                    $('.db-value[position="'+position+'"]').prop("disabled", true);
+                    $('.db-key[position="'+position+'"]').prop("disabled", true);
+                }
+            });
+
+            if(this.module.id != 0){
+                $('.select2-auto-grid').trigger('change');
+            }
+
+            $(document).on('change', '.select2-auto', event => {
+                var input_db_name = $(event.target).attr('name');
+                var position = $(event.target).attr('position');
+
+                this.form[input_db_name][position] = event.target.value;
+            });
         });
 
         if(this.module.parent_module_search) {
@@ -374,6 +413,12 @@ export default {
         if(this.module.parent_form_search) {
             axios.get(this.module.parent_form_search).then(data => {
                 this.parent_form = data.data;
+            });
+        }
+
+        if(this.module.table_search) {
+            axios.get(this.module.table_search).then(data => {
+                this.table = data.data;
             });
         }
         // [DropdownSearch]

@@ -31,15 +31,8 @@
 				
 				// [LanguagetransletModule]
             ];
-
-		$i = 0;
-		foreach (LangCode() as $key => $value) {
-			$data["locale"][$i]	= [
-	            'label' => $key ."-". $value,
-	            'value' => $key
-	        ];
-	        $i++;
-		}
+		$data["locale"] = LangCode();
+		
 		$file = [];
 		$filesInFolder = \File::allFiles(base_path('resources/lang/en'));
         foreach($filesInFolder as $path) { 

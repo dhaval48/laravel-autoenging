@@ -7,7 +7,13 @@
 		"gender" => "",
 		"description" => "",
 		
-		// [DemoArray]
+		"demo_id" => [],
+			"full_name" => [],
+			"start_date" => [],
+			"location_id" => [],
+			"is_active" => [],
+			
+			// [DemoArray]
 		];
 		
         $formelements["_token"] = csrf_token();
@@ -29,10 +35,37 @@
                 'get_file' => route('get.file'),
                 'warehouse_id_search' => route('get.warehouse_id'),
 				
+				'location_id_search' => route('get.location_id'),
+				
 				// [DemoModule]
             ];
 		$data["fillable"] = $formelements;
-		$data["gender"] = [];
+		$data["gender"] = ['Male', 'Female'];
+			
+		$data["demo_details"] = [
+				'Full name' => [
+					'type' => 'input',
+					'name' => 'full_name',
+				],
+				'Start date' => [
+					'type' => 'date',
+					'name' => 'start_date',
+				],
+				'Location' => [
+					'type' => 'dropdown',
+					'name' => 'location_id',
+					'modalid' => '#warehousesModal',
+				],
+				'Is active' => [
+					'type' => 'dropdown',
+					'name' => 'is_active',
+					'empty' => true,
+				],
+				
+			];
+			$data["demo_detailsrow_count"] = 0;
+			$data["demo_details_row"][] = 0;
+		$data["is_active"] = ['Active', 'Inactive'];
 			
 		// [DemoGrid]
 		return $data;

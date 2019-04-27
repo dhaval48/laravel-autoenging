@@ -59,7 +59,7 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'control'], function () {
 });
 
 Route::group(['namespace' => 'Backend', 'prefix' => 'autolaravel'], function () {
-	Route::group(['middleware' => 'auth'], function () {
+	Route::group(['middleware' => ['auth', 'locale:en']], function () {
 		Route::get('permissionmodules', 'PermissionmoduleController@index')->name('permissionmodule.index');
 		Route::get('permissionmodules-paginate','PermissionmoduleController@Paginate')->name('permissionmodule.paginate');
 		Route::get('permissionmodule/create', 'PermissionmoduleController@create')->name('permissionmodule.create');

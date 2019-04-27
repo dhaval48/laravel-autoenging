@@ -4,10 +4,10 @@ return [
 		'name' => 'નામ',
 		
         'create_title' => 'Create Warehouse',
-        'edit_title' => 'વેરહાઉસ સંપાદિત કરો',
-        'edit_message' => 'વેરહાઉસ સુધારાશે!',
-        'create_message' => 'વેરહાઉસ બનાવ્યું!',
-        'delete_message' => 'વેરહાઉસ કાઢી નાખ્યું!',
-        'list' => 'વેરહાઉસ',
+        'edit_title' => 'Edit Warehouse',
+        'edit_message' => 'Warehouse Updated!',
+        'create_message' => 'Warehouse Created!',
+        'delete_message' => 'Warehouse Deleted!',
+        'list' => 'Warehouses',
         
 ];

@@ -64,4 +64,7 @@ Route::get('get-warehouse_id', 'CommonController@getWarehouse_id')->name('get.wa
 Route::get('get-warehouse_id', 'CommonController@getWarehouse_id')->name('get.warehouse_id');
 
 Route::get('get-warehouse_id', 'CommonController@getWarehouse_id')->name('get.warehouse_id');
+
+
+Route::get('get-location_id', 'CommonController@getLocation_id')->name('get.location_id');
 // [CommonRoute]

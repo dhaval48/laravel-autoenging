@@ -4,7 +4,7 @@ return [
 	
 	'parent_module' => 'પરવાનગી મોડ્યુલ',
 	'main_module' => 'Form Name',
-	'table_name' => 'કોષ્ટક નામ',
+	'table_name' => 'Table Name',
 
     'create_title' => 'Create Form Module',
     'edit_title' => 'Edit Form Module',

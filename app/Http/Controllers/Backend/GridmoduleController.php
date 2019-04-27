@@ -231,8 +231,6 @@ class GridmoduleController extends Controller {
         }
 		// [GridValidation]
         $input = $request->all();
-        $input['parent_form'] = $input['parent_form']['value'];
-		$input['parent_module'] = $input['parent_module']['value'];
 		//[DropdownValue]
         $module = "";
         
@@ -349,8 +347,6 @@ class GridmoduleController extends Controller {
         $formelement = $model->getAttributes();
         $formelement['_token'] = csrf_token();
         
-        $formelement['parent_form'] = \DB::table('form_modules')->select('main_module as label','main_module as value')->where('main_module',$model->parent_form)->first();
-		$formelement['parent_module'] = \DB::table('permission_modules')->select('name as label','name as value')->where('name',$model->parent_module)->first();
 		// [DropdownSelectedValue]
 
          if(count($model->module_tables) > 0 ) {
@@ -384,10 +380,10 @@ class GridmoduleController extends Controller {
                 $formelement["visible"][] = $value->visible;
                 $formelement['input_name'][] = $value->input_name;
 
-                $formelement['input_type'][] = $value->input_type;
-                $formelement['key'][] = $value->key;
-                $formelement['value'][] = $value->value;
-                $formelement['table'][] = $value->table;
+                $formelement['input_type'][] = $value->input_type ? $value->input_type : '';
+                $formelement['key'][] = $value->key ? $value->key : '';
+                $formelement['value'][] = $value->value ? $value->value : '';
+                $formelement['table'][] = $value->table ? $value->table : '';
                 
             }
         } else {
@@ -477,10 +473,10 @@ class GridmoduleController extends Controller {
 
     public function makeModuleField($request) {
         return  "
-                 'parent_module' => '".$request->parent_module['value']."',
+                 'parent_module' => '".$request->parent_module."',
                  'main_module' => '".$request->main_module."',
                  'table_name' => '".$request->table_name."',
-                 'parent_form' => '".$request->parent_form['value']."',
+                 'parent_form' => '".$request->parent_form."',
                 ";
     }
 

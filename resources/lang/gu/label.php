@@ -3,19 +3,19 @@
 return [
 	'notification' => [
 		'error_message' => 'Somethings goes wrong.',
-		'success_message' => 'સફળતા',
+		'success_message' => 'Success!',
 	],
 
 	'common' => [
-		'date' => 'તારીખ',
-		'edit' => 'સંપાદિત કરો',
-		'delete' => 'કાઢી નાખો',
+		'date' => 'Date',
+		'edit' => 'Edit',
+		'delete' => 'Delete',
 		'export' => 'EXPORT',
 		'pdf' => 'PDF',
 		'csv' => 'CSV',
-		'save' => 'સાચવો',
-		'add_files' => 'ફાઇલો ઉમેરો',
+		'save' => 'Save',
+		'add_files' => 'Add Files',
 		'add_new' => 'Add New',
-		'no_data' => 'કોઈ ડેટા મળ્યો નથી.'
+		'no_data' => 'No data found.'
 	],
 ];

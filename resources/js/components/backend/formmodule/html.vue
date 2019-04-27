@@ -232,55 +232,59 @@ export default {
                 this.index--;
             }
         },
+
         // [DropdownFunction]
         onSubmit() {            
-            var name = this.form.main_module;
             this.form.post(this.module.store_route).then(response => {
                  
-            if(this.module.id == 0) {
+                if(this.module.id == 0) {
 
-                var grid = this.module.module_tables;
-                
-                for(var key in grid) {                        
-                   this.$refs.module_tables.form[grid[key].name] = [""];
+                    var grid = this.module.module_tables;
+                    
+                    for(var key in grid) {                        
+                       this.$refs.module_tables.form[grid[key].name] = [""];
+                    }
+
+
+                    this.$refs.module_tables.rows = [];
+                    this.$refs.module_tables.rows = [0];
+                    this.$refs.module_tables.index = 0;
+
+                    
+                    this.$parent._data.form = new Form(this.module.fillable);
+                    this.form = this.$parent._data.form;
+                    this.$refs.module_tables.form  = this.module.fillable;
+
                 }
 
-
-                this.$refs.module_tables.rows = [];
-                this.$refs.module_tables.rows = [0];
-                this.$refs.module_tables.index = 0;
-
                 
-                this.$parent._data.form = new Form(this.module.fillable);
-                this.form = this.$parent._data.form;
-                this.$refs.module_tables.form  = this.module.fillable;
+                if(this.module.id == 0) {
 
-            }
+                    $.each(this.rows, (index, list) => {
+                        this.form.visible.splice(index, 1);
+                        this.form.input_name.splice(index, 1);
+                        this.form.db_name.splice(index, 1);
+                        this.form.input_type.splice(index, 1);
+                        this.form.table.splice(index, 1);
+                        this.form.value.splice(index, 1);
+                        this.form.key.splice(index, 1);
+                    });
 
-            
-            if(this.module.id == 0) {
+                    this.rows = [];
+                    this.rows = [0];
+                    this.index = 0;
 
-                $.each(this.rows, (index, list) => {
-                    this.form.visible.splice(index, 1);
-                    this.form.input_name.splice(index, 1);
-                    this.form.db_name.splice(index, 1);
-                    this.form.input_type.splice(index, 1);
-                    this.form.table.splice(index, 1);
-                    this.form.value.splice(index, 1);
-                    this.form.key.splice(index, 1);
+                    $.each(this.module.module_inputs, (i, list) => {
+                        this.form[list.name][this.index] = "";
+                    });
+
+                }
+
+                // [GRID_RESET]
+
+                $(document).ready( () => { 
+                    $(".select2").select2({width:'100%'});
                 });
-
-                this.rows = [];
-                this.rows = [0];
-                this.index = 0;
-
-                $.each(this.module.module_inputs, (i, list) => {
-                    this.form[list.name][this.index] = "";
-                });
-
-            }
-
-            // [GRID_RESET]
 
                 this.$root.$emit('form_modulesCreated', response);
                 this.$parent.activity_init();
@@ -304,12 +308,6 @@ export default {
                 var input_db_name = $(event.target).attr('name');
                 this.form[input_db_name] = event.target.value
             });
-
-        });
-
-        $(document).ready( () => { 
-            
-            $(".select2").select2({width:'100%'});
 
             $(document).on('change', '.select2-auto-grid', event => {
                 var input_db_name = $(event.target).attr('name');
@@ -341,13 +339,14 @@ export default {
             if(this.module.id != 0){
                 $('.select2-auto-grid').trigger('change');
             }
-        });
 
-        $(document).on('change', '.select2-auto', event => {
-            var input_db_name = $(event.target).attr('name');
-            var position = $(event.target).attr('position');
+            $(document).on('change', '.select2-auto', event => {
+                var input_db_name = $(event.target).attr('name');
+                var position = $(event.target).attr('position');
 
-            this.form[input_db_name][position] = event.target.value;
+                this.form[input_db_name][position] = event.target.value;
+            });
+
         });
 
         if(this.module.parent_module_search) {

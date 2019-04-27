@@ -60,7 +60,7 @@ class Apimodule extends Model
 			Lang::get('api_modules.parent_module') => 'parent_module',
 			Lang::get('api_modules.main_module') => 'main_module',
 			Lang::get('api_modules.is_model') => 'is_model',
-			Lang::get('api_modules.is_public') => 'is_model',
+			Lang::get('api_modules.is_public') => 'is_public',
 			Lang::get('api_modules.table_name') => 'table_name',
 			
         ];

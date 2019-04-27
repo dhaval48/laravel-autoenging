@@ -43,6 +43,8 @@
 
 @include("backend.modal.warehouses",$data['warehouses_module'])
 
+@include("backend.modal.warehouses",$data['warehouses_module'])
+
 {{-- [Modal_path] --}}
 @endsection
 @section('after-scripts')

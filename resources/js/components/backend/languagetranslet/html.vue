@@ -10,14 +10,10 @@
                     <div :class='form.errors.has("locale")?"form-group has-error":"form-group"'>
                         <label for='locale'>{{this.module.lang.locale}}</label>
 
-                        <v-select 
-                            :options='locale'
-                            placeholder='Select locale'
-                            v-model='form.locale'
-                        ></v-select>
-                        <span class='help-block' 
-                        v-if='form.errors.has("locale")'
-                        v-text='form.errors.get("locale")'></span>
+                        <select class="form-control select2 select2-form" ref='locale' name="locale" v-model="form.locale">
+                            <option value="">Select Language</option>
+                            <option v-for="(value, key) in locale" :value='key'>{{key}}-{{value}}</option>
+                        </select>
                     </div>
                 </div>                
 			</div>
@@ -56,7 +52,7 @@
                     <ul class="pagination">
                         <li class="page-item" v-if='page > 1'>
                             <a href="javascript:void(0);" aria-label="Previous"
-                            v-on:click="getPageData(his.module.page - 1)" class="page-link">
+                            v-on:click="getPageData(this.module.page - 1)" class="page-link">
                                 <span aria-hidden="true">Previous</span>
                             </a>
                         </li>
@@ -99,7 +95,7 @@ export default {
     data(){
         return {
             form:this.formObj,
-            locale : Object.values(this.module.locale),
+            locale : this.module.locale,
             lang_value_pagination : "",
             page : "",
             total_pages : "",
@@ -123,12 +119,9 @@ export default {
             this.form.post(this.module.store_route).then(response => {
 
                 // [GRID_RESET]
-        
-                
-                var response = {
-                    label:name,
-                    value:response.data.id
-                }
+                $(document).ready( () => {
+                    $(".select2").select2({width:'100%'});
+                });
 
                 this.$root.$emit('language_transletsCreated', response);
                 this.$parent.activity_init();
@@ -139,6 +132,16 @@ export default {
     mounted() {
         this.form.value = this.module.lang_value;
         this.getPageData(1);
+
+        $(document).ready( () => { 
+            
+            $(".select2").select2({width:'100%'});
+
+            $(document).on('change', '.select2-form', event => {
+                var input_db_name = $(event.target).attr('name');
+                this.form[input_db_name] = event.target.value
+            });
+        });
         // [DropdownSearch]
     }
 }

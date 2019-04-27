@@ -134,7 +134,7 @@ class CommonController extends Controller
 
 	public function getParent_form(Request $request) {
 
-		return \DB::table('form_modules')->latest()->select('main_module as label','main_module as value')->where('main_module','like',"%$request->q%")->wherenull('deleted_at')->wherenull('parent_form')->get();
+		return \DB::table('form_modules')->latest()->wherenull('deleted_at')->wherenull('parent_form')->pluck('main_module','main_module');
 
 	}
 
@@ -187,5 +187,6 @@ class CommonController extends Controller
 
 	}
 
+	
 	// [Function]
 }

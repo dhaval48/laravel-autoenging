@@ -66,7 +66,14 @@
                 
             </div>
             <div class="row">
-            <!-- [GridVueElement-1] -->
+            
+			<div class="col-sm-12">
+				
+                <h4>Demo Details</h4>
+			
+            </div>
+			<grid :module="this.module" :elementdata="this.module.demo_details" :elementrow="this.module.demo_details_row" :rowcount="this.module.demo_detailsrow_count" ref="demo_details"></grid>
+		<!-- [GridVueElement-1] -->
             </div>
 
             <div class="row">
@@ -105,7 +112,29 @@ export default {
             this.form.post(this.module.store_route).then(response => {
                 this.$refs.file_upload.submitFiles(this.module.dir, response.data.id);
                 
-                 // [GRID_RESET]
+                 
+            if(this.module.id == 0) {
+
+                var grid = this.module.demo_details;
+                
+                for(var key in grid) {                        
+                   this.$refs.demo_details.form[grid[key].name] = [""];
+                }
+
+
+                this.$refs.demo_details.rows = [];
+                this.$refs.demo_details.rows = [0];
+                this.$refs.demo_details.index = 0;
+
+                
+                this.$parent._data.form = new Form(this.module.fillable);
+                this.form = this.$parent._data.form;
+                this.$refs.demo_details.form  = this.module.fillable;
+
+            }
+
+            // [GRID_RESET]
+        
 
                 $(document).ready( () => { 
                     $(".select2").select2({width:'100%'});

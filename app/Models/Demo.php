@@ -34,7 +34,13 @@ class Demo extends Model
 		"description" => "",
 		
 
-         // [ModelArray]
+         "demo_id" => [],
+			"full_name" => [],
+			"start_date" => [],
+			"location_id" => [],
+			"is_active" => [],
+			
+			// [ModelArray]
     ];
 
     public $searchelements = [
@@ -62,5 +68,9 @@ class Demo extends Model
 	public function warehouses() {
 	    return $this->belongsTo('App\Models\Warehouse','warehouse_id','id');
 	}
-// [Relation]
+
+	public function demo_details() {
+	    return $this->hasMany('App\Models\Demodetails','demo_id','id');
+	}
+	// [Relation]
 }

@@ -36,6 +36,7 @@ class DemoController extends Controller {
         
         $this->data = ModuleConfig::demos();
          $this->data['warehouses_module'] = ModuleConfig::warehouses();
+		$this->data['warehouses_module'] = ModuleConfig::warehouses();
 		// [Module_Data]
     }
 
@@ -149,7 +150,26 @@ class DemoController extends Controller {
 			
             ]
         );   
-         // [GridValidation]
+         $array = [];
+		$rows = count($request->full_name);
+		for ($i = 0; $i < $rows; $i++) {
+			$array["full name"] = $request->full_name[$i];
+			$array["start date"] = parseDBdate($request->start_date[$i]);
+			$array["location"] = $request->location_id[$i];
+			$array["is active"] = $request->is_active[$i];
+			if(count(array_filter($array)) != 0) {
+                foreach ($array as $key => $value) {
+                    if($value == ""){
+                        return errorResponse(ucfirst($key)." Field is required");
+                    }
+                }
+            } else {
+                if($rows == 1) {
+                    return errorResponse("Add demo details. Atleast one row is required");
+                }
+            }
+        }
+		// [GridValidation]
         $input = $request->all();
          $input['date'] = parseDBdate($input['date']);
 		//[DropdownValue]
@@ -159,15 +179,40 @@ class DemoController extends Controller {
             if(isset($request->id)) {
                 $model = Module::find($request->id);
                 $msg = activity($input, $this->data['lang'], $model->toArray());
-                 // [GridActivity]
-                 // [GridDelete]
+                 $input_grid = [];
+				for($i=0; $i < count(array_filter($request->full_name)); $i++) {
+					$input_grid["demo_id"][] = $model->id;
+					$input_grid["full_name"][] = $request->full_name[$i];
+					$input_grid["start_date"][] = parseDBdate($request->start_date[$i]);
+					$input_grid["location_id"][] = $request->location_id[$i];
+					$input_grid["is_active"][] = $request->is_active[$i];
+					
+				}
+				$msg_row = activityRow($input_grid, count(array_filter($request->full_name)), $model->demo_details->toArray());
+                foreach ($msg_row as $key => $value) {
+                    Activity::add($value, $this->data["dir"], $model->id);
+                }
+				// [GridActivity]
+                 $model->demo_details()->where("demo_id", $request->id)->delete();
+				// [GridDelete]
                 $model->update($input);
             } else {
                 $input["created_by"] = user()->id;
                 $model = Module::Create($input);
                 $msg = "<b>".Auth::user()->name."</b> created ".$this->data['dir'].".";
             }
-             // [GridSave]
+             
+            for($i=0; $i < count(array_filter($request->full_name)); $i++) {
+					$model->demo_details()->create([
+								"demo_id" => $model->id,
+								'full_name' => $request->full_name[$i],
+								'start_date' => parseDBdate($request->start_date[$i]),
+								'location_id' => $request->location_id[$i],
+								'is_active' => $request->is_active[$i],
+								
+					]);
+				}
+				// [GridSave]
             if(!empty($msg)) {
                 Activity::add($msg, $this->data['dir'], $model->id);
             }
@@ -191,7 +236,25 @@ class DemoController extends Controller {
          $formelement['date'] = parseDate($model->date);
 		// [DropdownSelectedValue]
         
-         // [GridEdit]
+         if(count($model->demo_details) > 0 ) {
+            $this->data["demo_details_row"] = [];
+			$this->data["demo_detailsrow_count"] = count($model->demo_details) - 1;
+			foreach ($model->demo_details as $key => $value) {
+				$this->data["demo_details_row"][] = $key;
+				$formelement['full_name'][] = $value->full_name;
+				$formelement['start_date'][] = parseDate($value->start_date);
+				$formelement['location_id'][] = $value->location_id;
+				$formelement['is_active'][] = $value->is_active;
+				
+			}
+		} else {
+			$formelement['full_name'][] = "";
+			$formelement['start_date'][] = "";
+			$formelement['location_id'][] = "";
+			$formelement['is_active'][] = "";
+			
+		}
+		// [GridEdit]
         $this->data['fillable'] = $formelement;
 
         $this->data['permissions'] = HandlePermission::getPermissionsVue($this->data['dir']);
@@ -213,7 +276,8 @@ class DemoController extends Controller {
             $model = Module::findorfail($request->id);
             $msg = "<b>".Auth::user()->name."</b> deleted data of id : ". $model->id;
             Activity::add($msg, $this->data['dir'], $model->id);
-             // [GridDelete]
+             $model->demo_details()->where("demo_id", $request->id)->delete();
+				// [GridDelete]
             $model->delete();
         } catch (\Exception $e) {
             \DB::rollback();                        

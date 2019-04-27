@@ -4,9 +4,9 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\Models\[UNAME] as Module;
+use App\Models\Testmodule as Module;
 
-class [UNAME] extends TestCase
+class Testmodule extends TestCase
 {
 
 	public function getToken($access_token = false)
@@ -26,11 +26,11 @@ class [UNAME] extends TestCase
     }
     
     /**
-     * @group [MODULE]-list
+     * @group testmodule-list
      */
     public function testIndex(){
         
-        $response = $this->get('api/[MODULE]s',
+        $response = $this->get('api/testmodules',
                         [
                             'Accept' => 'application/json',
                             'Authorization' => "Bearer ".$this->getToken(true)
@@ -40,30 +40,31 @@ class [UNAME] extends TestCase
     }
 
     /**
-     * @group [MODULE]-store
+     * @group testmodule-store
      */
     public function testStore(){
         $body =  [        
-                    [TESTCASEDATA]        
+                    'name' => 'Test-Case',
+						        
                 ];
 
-        $response = $this->post('/api/[MODULE]/store',$body,
+        $response = $this->post('/api/testmodule/store',$body,
                         [
                             'Accept' => 'application/json',
                             'Authorization' => "Bearer ".$this->getToken(true)
                         ]
                     );
-        $response->assertSeeText('[ULABEL] Created!');
+        $response->assertSeeText('Test Module Created!');
     }
 
     /**
-     * @group [MODULE]-edit
+     * @group testmodule-edit
      */
     public function testEdit(){
 
         $model = Module::orderBy('id', 'desc')->first();
 
-        $response = $this->get('api/[MODULE]/edit/'.$model->id,
+        $response = $this->get('api/testmodule/edit/'.$model->id,
                         [
                             'Accept' => 'application/json',
                             'Authorization' => "Bearer ".$this->getToken(true)
@@ -73,39 +74,40 @@ class [UNAME] extends TestCase
     }
 
     /**
-     * @group [MODULE]-update
+     * @group testmodule-update
      */
     public function testUpdate(){
 
         $model = Module::orderBy('id', 'desc')->first();
 
         $body =  [        
-                    [TESTCASEDATA]
+                    'name' => 'Test-Case',
+						
                     'id' => $model->id,        
                 ];
 
-        $response = $this->post('/api/[MODULE]/update',$body,
+        $response = $this->post('/api/testmodule/update',$body,
                         [
                             'Accept' => 'application/json',
                             'Authorization' => "Bearer ".$this->getToken(true)
                         ]
                     );
-        $response->assertSeeText('[ULABEL] Updated!');
+        $response->assertSeeText('Test Module Updated!');
     }
 
     /**
-     * @group [MODULE]-delete
+     * @group testmodule-delete
      */
     public function testDelete(){
 
         $model = Module::orderBy('id', 'desc')->first();
 
-        $response = $this->get('api/[MODULE]/destroy/'.$model->id,
+        $response = $this->get('api/testmodule/destroy/'.$model->id,
                         [
                             'Accept' => 'application/json',
                             'Authorization' => "Bearer ".$this->getToken(true)
                         ]
                     );
-        $response->assertSeeText('[ULABEL] Deleted!');
+        $response->assertSeeText('Test Module Deleted!');
     }
 }

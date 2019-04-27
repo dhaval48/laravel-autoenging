@@ -2283,6 +2283,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['formObj', 'module'],
@@ -2299,7 +2306,22 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.form.post(this.module.store_route).then(function (response) {
-        _this.$refs.file_upload.submitFiles(_this.module.dir, response.data.id); // [GRID_RESET]
+        _this.$refs.file_upload.submitFiles(_this.module.dir, response.data.id);
+
+        if (_this.module.id == 0) {
+          var grid = _this.module.demo_details;
+
+          for (var key in grid) {
+            _this.$refs.demo_details.form[grid[key].name] = [""];
+          }
+
+          _this.$refs.demo_details.rows = [];
+          _this.$refs.demo_details.rows = [0];
+          _this.$refs.demo_details.index = 0;
+          _this.$parent._data.form = new Form(_this.module.fillable);
+          _this.form = _this.$parent._data.form;
+          _this.$refs.demo_details.form = _this.module.fillable;
+        } // [GRID_RESET]
 
 
         $(document).ready(function () {
@@ -2756,7 +2778,6 @@ __webpack_require__.r(__webpack_exports__);
     onSubmit: function onSubmit() {
       var _this4 = this;
 
-      var name = this.form.main_module;
       this.form.post(this.module.store_route).then(function (response) {
         if (_this4.module.id == 0) {
           var grid = _this4.module.module_tables;
@@ -2798,6 +2819,12 @@ __webpack_require__.r(__webpack_exports__);
         } // [GRID_RESET]
 
 
+        $(document).ready(function () {
+          $(".select2").select2({
+            width: '100%'
+          });
+        });
+
         _this4.$root.$emit('form_modulesCreated', response);
 
         _this4.$parent.activity_init();
@@ -2820,11 +2847,6 @@ __webpack_require__.r(__webpack_exports__);
       $(document).on('change', '.select2-form', function (event) {
         var input_db_name = $(event.target).attr('name');
         _this5.form[input_db_name] = event.target.value;
-      });
-    });
-    $(document).ready(function () {
-      $(".select2").select2({
-        width: '100%'
       });
       $(document).on('change', '.select2-auto-grid', function (event) {
         var input_db_name = $(event.target).attr('name');
@@ -2855,11 +2877,12 @@ __webpack_require__.r(__webpack_exports__);
       if (_this5.module.id != 0) {
         $('.select2-auto-grid').trigger('change');
       }
-    });
-    $(document).on('change', '.select2-auto', function (event) {
-      var input_db_name = $(event.target).attr('name');
-      var position = $(event.target).attr('position');
-      _this5.form[input_db_name][position] = event.target.value;
+
+      $(document).on('change', '.select2-auto', function (event) {
+        var input_db_name = $(event.target).attr('name');
+        var position = $(event.target).attr('position');
+        _this5.form[input_db_name][position] = event.target.value;
+      });
     });
 
     if (this.module.parent_module_search) {
@@ -3343,7 +3366,6 @@ __webpack_require__.r(__webpack_exports__);
     onSubmit: function onSubmit() {
       var _this7 = this;
 
-      var name = this.form.main_module;
       this.form.post(this.module.store_route).then(function (response) {
         if (_this7.module.id == 0) {
           var grid = _this7.module.module_tables;
@@ -3385,6 +3407,12 @@ __webpack_require__.r(__webpack_exports__);
         } // [GRID_RESET]
 
 
+        $(document).ready(function () {
+          $(".select2").select2({
+            width: '100%'
+          });
+        });
+
         _this7.$root.$emit('grid_modulesCreated', response);
 
         _this7.$parent.activity_init();
@@ -3408,6 +3436,40 @@ __webpack_require__.r(__webpack_exports__);
         var input_db_name = $(event.target).attr('name');
         _this8.form[input_db_name] = event.target.value;
       });
+      $(document).on('change', '.select2-auto-grid', function (event) {
+        var input_db_name = $(event.target).attr('name');
+        var position = $(event.target).attr('position');
+        _this8.form[input_db_name][position] = event.target.value;
+
+        if (_this8.form.input_type[position] == "dropdown") {
+          $('.db-table[position="' + position + '"]').prop("disabled", false);
+          $('.db-value[position="' + position + '"]').prop("disabled", false);
+          $('.db-key[position="' + position + '"]').prop("disabled", false);
+
+          if (_this8.form.table[position] != null && _this8.form.table[position]) {
+            _this8.value = [];
+            _this8.key = [];
+            axios.get(_this8.module.table_data_search + '?q=' + _this8.form.table[position]).then(function (data) {
+              _this8.value = data.data;
+              _this8.key = data.data;
+            });
+          }
+        } else {
+          $('.db-table[position="' + position + '"]').prop("disabled", true);
+          $('.db-value[position="' + position + '"]').prop("disabled", true);
+          $('.db-key[position="' + position + '"]').prop("disabled", true);
+        }
+      });
+
+      if (_this8.module.id != 0) {
+        $('.select2-auto-grid').trigger('change');
+      }
+
+      $(document).on('change', '.select2-auto', function (event) {
+        var input_db_name = $(event.target).attr('name');
+        var position = $(event.target).attr('position');
+        _this8.form[input_db_name][position] = event.target.value;
+      });
     });
 
     if (this.module.parent_module_search) {
@@ -3419,6 +3481,12 @@ __webpack_require__.r(__webpack_exports__);
     if (this.module.parent_form_search) {
       axios.get(this.module.parent_form_search).then(function (data) {
         _this8.parent_form = data.data;
+      });
+    }
+
+    if (this.module.table_search) {
+      axios.get(this.module.table_search).then(function (data) {
+        _this8.table = data.data;
       });
     } // [DropdownSearch]
 
@@ -3682,17 +3750,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['formObj', 'module'],
   data: function data() {
     return {
       form: this.formObj,
-      locale: Object.values(this.module.locale),
+      locale: this.module.locale,
       lang_value_pagination: "",
       page: "",
       total_pages: "" // [OptionsData]
@@ -3715,10 +3779,11 @@ __webpack_require__.r(__webpack_exports__);
 
       this.form.post(this.module.store_route).then(function (response) {
         // [GRID_RESET]
-        var response = {
-          label: name,
-          value: response.data.id
-        };
+        $(document).ready(function () {
+          $(".select2").select2({
+            width: '100%'
+          });
+        });
 
         _this2.$root.$emit('language_transletsCreated', response);
 
@@ -3727,8 +3792,19 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
+    var _this3 = this;
+
     this.form.value = this.module.lang_value;
-    this.getPageData(1); // [DropdownSearch]
+    this.getPageData(1);
+    $(document).ready(function () {
+      $(".select2").select2({
+        width: '100%'
+      });
+      $(document).on('change', '.select2-form', function (event) {
+        var input_db_name = $(event.target).attr('name');
+        _this3.form[input_db_name] = event.target.value;
+      });
+    }); // [DropdownSearch]
   }
 });
 
@@ -6038,7 +6114,9 @@ __webpack_require__.r(__webpack_exports__);
       index: this.rowcount,
       form: this.module.fillable,
       type: this.module.type,
-      gridIndex: 0 // [GridOptionsData]
+      gridIndex: 0,
+      location_id: [],
+      is_active: this.module.is_active // [GridOptionsData]
 
     };
   },
@@ -6101,6 +6179,12 @@ __webpack_require__.r(__webpack_exports__);
     if (this.module.id == 0) {
       $.each(this.grid, function (i, list) {
         _this3.form[list.name][_this3.index] = "";
+      });
+    }
+
+    if (this.module.location_id_search) {
+      axios.get(this.module.location_id_search).then(function (data) {
+        _this3.location_id = data.data;
       });
     } // [GridDropdownSearch]
 
@@ -60579,7 +60663,24 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "row" }),
+          _c(
+            "div",
+            { staticClass: "row" },
+            [
+              _vm._m(0),
+              _vm._v(" "),
+              _c("grid", {
+                ref: "demo_details",
+                attrs: {
+                  module: this.module,
+                  elementdata: this.module.demo_details,
+                  elementrow: this.module.demo_details_row,
+                  rowcount: this.module.demo_detailsrow_count
+                }
+              })
+            ],
+            1
+          ),
           _vm._v(" "),
           _c("div", { staticClass: "row" }, [
             _c(
@@ -60613,7 +60714,16 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-sm-12" }, [
+      _c("h4", [_vm._v("Demo Details")])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -62871,30 +62981,54 @@ var render = function() {
                     _vm._v(_vm._s(this.module.lang.locale))
                   ]),
                   _vm._v(" "),
-                  _c("v-select", {
-                    attrs: {
-                      options: _vm.locale,
-                      placeholder: "Select locale"
-                    },
-                    model: {
-                      value: _vm.form.locale,
-                      callback: function($$v) {
-                        _vm.$set(_vm.form, "locale", $$v)
-                      },
-                      expression: "form.locale"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _vm.form.errors.has("locale")
-                    ? _c("span", {
-                        staticClass: "help-block",
-                        domProps: {
-                          textContent: _vm._s(_vm.form.errors.get("locale"))
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.locale,
+                          expression: "form.locale"
                         }
+                      ],
+                      ref: "locale",
+                      staticClass: "form-control select2 select2-form",
+                      attrs: { name: "locale" },
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.form,
+                            "locale",
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        }
+                      }
+                    },
+                    [
+                      _c("option", { attrs: { value: "" } }, [
+                        _vm._v("Select Language")
+                      ]),
+                      _vm._v(" "),
+                      _vm._l(_vm.locale, function(value, key) {
+                        return _c("option", { domProps: { value: key } }, [
+                          _vm._v(_vm._s(key) + "-" + _vm._s(value))
+                        ])
                       })
-                    : _vm._e()
-                ],
-                1
+                    ],
+                    2
+                  )
+                ]
               )
             ])
           ]),
@@ -62961,7 +63095,7 @@ var render = function() {
                             },
                             on: {
                               click: function($event) {
-                                return _vm.getPageData(_vm.his.module.page - 1)
+                                return _vm.getPageData(this.module.page - 1)
                               }
                             }
                           },

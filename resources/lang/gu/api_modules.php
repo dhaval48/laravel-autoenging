@@ -3,8 +3,9 @@
 return [
 	'parent_module' => 'પરવાનગી મોડ્યુલ',
 	'main_module' => 'Api Name',
-	'is_model' => 'Is Model?',
-	'table_name' => 'કોષ્ટક નામ',
+    'is_model' => 'Is Model?',
+	'is_public' => 'Is Public?',
+	'table_name' => 'Table Name',
 
     'create_title' => 'Create Api Modules',
     'edit_title' => 'Edit Api Modules',
