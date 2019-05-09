@@ -182,7 +182,7 @@ Class ApiHelper {
             $migration_file = $migration_file.'.php';
             $migration_path = $project_path_main.'/database/migrations/'.$migration_file;
         } else {
-            if($old_data == "") {
+            if($old_data == "" && $request->is_model) {
                 $path = exec("php ".$project_path_main."/artisan make:migration create_".$request->table_name."_table");
                 $migration_file = str_replace('Created Migration: ', '',$path);
                 $migration_file = $migration_file.'.php';
