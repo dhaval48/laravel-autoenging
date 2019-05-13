@@ -569,7 +569,11 @@ Class Helper {
     // [Relation]
     public function makeRelation($request, $i, $db_name) {
         $main_module = \DB::table('form_modules')->where('table_name', $request->table[$i])->wherenull('deleted_at')->wherenull('parent_form')->first();
-        $controller_name = $this->makeControllerName($main_module);
+        if($main_module) {
+            $controller_name = $this->makeControllerName($main_module);
+        } else {
+            $controller_name = ucfirst($request->table[$i]);
+        }
 
         if(!empty($this->field['controller_relation'])) {
             $this->field['controller_relation'] .= ',';
